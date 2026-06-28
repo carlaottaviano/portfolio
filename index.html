@@ -6,492 +6,117 @@
   <title>Carla Ottaviano — Senior Product Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --white: #ffffff;
-      --off-white: #FAFAF9;
       --ink: #111110;
       --ink-2: #3C3C38;
-      --ink-3: #6E6E68;
-      --ink-4: #A8A8A2;
-      --rule: #E8E8E4;
-      --accent: #1A1A18;
-      --accent-light: #F0EFE8;
-      --font-display: 'Lora', Georgia, serif;
-      --font-body: 'Inter', system-ui, sans-serif;
+      --ink-3: #888884;
+      --ink-4: #BBBBБ6;
+      --rule: #EFEFED;
+      --font: 'Inter', system-ui, sans-serif;
     }
-
     html { font-size: 16px; scroll-behavior: smooth; }
-
-    body {
-      background: var(--white);
-      color: var(--ink);
-      font-family: var(--font-body);
-      font-weight: 400;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { background: var(--white); color: var(--ink); font-family: var(--font); font-weight: 400; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
     /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--rule);
-      padding: 0 clamp(1.5rem, 5vw, 4rem);
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-name {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -0.01em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.8125rem;
-      color: var(--ink-3);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: color 0.15s;
-    }
-
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); padding: 0 clamp(1.5rem, 6vw, 5rem); height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-name { font-size: 13px; font-weight: 500; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; transition: color 0.15s; }
     .nav-links a:hover { color: var(--ink); }
 
-    /* LAYOUT */
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 clamp(1.5rem, 5vw, 4rem);
-    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 clamp(1.5rem, 6vw, 5rem); }
 
     /* HERO */
-    .hero {
-      padding-top: calc(56px + clamp(4rem, 10vw, 8rem));
-      padding-bottom: clamp(4rem, 10vw, 8rem);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #4CAF50;
-    }
-
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(2.25rem, 5vw, 3.5rem);
-      font-weight: 400;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      max-width: 700px;
-      margin-bottom: 1.75rem;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--ink-2);
-    }
-
-    .hero-sub {
-      font-size: 1rem;
-      color: var(--ink-3);
-      line-height: 1.7;
-      max-width: 520px;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      text-decoration: none;
-      padding: 0.625rem 1.25rem;
-      border-radius: 4px;
-      transition: all 0.15s;
-      letter-spacing: 0.01em;
-    }
-
-    .btn-primary {
-      background: var(--ink);
-      color: var(--white);
-    }
-
+    .hero { padding-top: calc(52px + clamp(5rem, 12vw, 9rem)); padding-bottom: clamp(4rem, 10vw, 7rem); border-bottom: 1px solid var(--rule); }
+    .hero-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
+    .hero-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
+    .hero-eyebrow::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4CAF50; }
+    .hero-role { font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; }
+    .hero h1 { font-size: clamp(2.75rem, 6vw, 4.5rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 2.5rem; max-width: 680px; }
+    .hero h1 em { font-style: normal; font-weight: 300; color: var(--ink-3); }
+    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+    .hero-sub { font-size: 13px; color: var(--ink-3); line-height: 1.8; max-width: 340px; }
+    .hero-actions { display: flex; gap: 10px; align-items: center; }
+    .btn { font-family: var(--font); font-size: 12px; font-weight: 500; text-decoration: none; padding: 9px 18px; border-radius: 100px; transition: all 0.15s; display: inline-block; }
+    .btn-primary { background: var(--ink); color: #fff; }
     .btn-primary:hover { background: var(--ink-2); }
-
-    .btn-ghost {
-      color: var(--ink-3);
-      border: 1px solid var(--rule);
-    }
-
+    .btn-ghost { color: var(--ink-3); border: 1px solid var(--rule); }
     .btn-ghost:hover { border-color: var(--ink-3); color: var(--ink); }
 
-    /* WORK SECTION */
-    .section {
-      padding: clamp(3rem, 8vw, 6rem) 0;
-      border-bottom: 1px solid var(--rule);
-    }
+    /* WORK */
+    .section { padding: clamp(3rem, 8vw, 5.5rem) 0; border-bottom: 1px solid var(--rule); }
+    .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #ccc; margin-bottom: 2rem; }
 
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 2.5rem;
-    }
+    .case-featured { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; padding: 2rem; border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 1rem; text-decoration: none; color: inherit; transition: border-color 0.2s; background: #FAFAF9; }
+    .case-featured:hover { border-color: #ccc; }
+    .case-thumb { aspect-ratio: 4/3; background: #F0EFE8; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .case-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .case-thumb-icon { opacity: 0.15; font-size: 2rem; }
+    .case-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .tag { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); background: #fff; border: 1px solid var(--rule); padding: 3px 8px; border-radius: 3px; }
+    .case-title { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); line-height: 1.2; margin-bottom: 0.6rem; }
+    .case-desc { font-size: 13px; color: var(--ink-3); line-height: 1.65; margin-bottom: 1rem; }
+    .case-link { font-size: 12px; font-weight: 500; color: var(--ink); display: inline-flex; align-items: center; gap: 4px; }
 
-    .section-label {
-      font-size: 0.6875rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-4);
-    }
+    .cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .case-card { display: block; padding: 1.5rem; border: 1px solid var(--rule); border-radius: 8px; text-decoration: none; color: inherit; transition: border-color 0.2s; }
+    .case-card:hover { border-color: #ccc; }
+    .case-card-thumb { aspect-ratio: 16/9; background: #F0EFE8; border-radius: 4px; margin-bottom: 1.25rem; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .case-card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .case-card .case-title { font-size: 1rem; margin-bottom: 0.4rem; }
+    .case-card .case-desc { font-size: 12px; margin-bottom: 0; }
 
-    /* CASE STUDY CARDS */
-    .case-featured {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-      padding: 2.5rem;
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      background: var(--off-white);
-    }
-
-    .case-featured:hover {
-      border-color: var(--ink-3);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    }
-
-    .case-thumb {
-      aspect-ratio: 4/3;
-      background: var(--accent-light);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .case-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-
-    .case-thumb-placeholder {
-      width: 48px;
-      height: 48px;
-      opacity: 0.2;
-    }
-
-    .case-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .case-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      font-size: 0.6875rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      background: var(--white);
-      border: 1px solid var(--rule);
-      padding: 3px 8px;
-      border-radius: 3px;
-    }
-
-    .case-title {
-      font-family: var(--font-display);
-      font-size: 1.375rem;
-      font-weight: 400;
-      line-height: 1.3;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-    }
-
-    .case-desc {
-      font-size: 0.875rem;
-      color: var(--ink-3);
-      line-height: 1.65;
-    }
-
-    .case-link {
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--ink);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 0.25rem;
-    }
-
-    .case-link svg { transition: transform 0.15s; }
-    a:hover .case-link svg { transform: translateX(3px); }
-
-    /* SECONDARY CARDS */
-    .cases-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .case-card {
-      display: block;
-      padding: 1.75rem;
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .case-card:hover {
-      border-color: var(--ink-3);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    }
-
-    .case-card-thumb {
-      aspect-ratio: 16/9;
-      background: var(--accent-light);
-      border-radius: 4px;
-      margin-bottom: 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .case-card-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .case-card .case-tags { margin-bottom: 0.5rem; }
-    .case-card .case-title { font-size: 1.0625rem; margin-bottom: 0.5rem; }
-    .case-card .case-desc { font-size: 0.8125rem; }
-
-    /* ABOUT STRIP */
-    .about-strip {
-      padding: clamp(3rem, 8vw, 6rem) 0;
-      border-bottom: 1px solid var(--rule);
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 4rem;
-      align-items: start;
-    }
-
-    .about-strip-label {
-      font-size: 0.6875rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-4);
-      padding-top: 4px;
-    }
-
-    .about-text p {
-      font-size: 0.9375rem;
-      color: var(--ink-2);
-      line-height: 1.8;
-      margin-bottom: 1em;
-    }
-
-    .about-text p:last-child { margin-bottom: 0; }
-
-    /* SKILLS */
-    .skills-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 1.5rem;
-    }
-
-    .skill-pill {
-      font-size: 0.75rem;
-      color: var(--ink-3);
-      background: var(--off-white);
-      border: 1px solid var(--rule);
-      padding: 4px 12px;
-      border-radius: 100px;
-    }
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; padding: clamp(3rem, 8vw, 5.5rem) 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .about-body p { font-size: 14px; color: var(--ink-2); line-height: 1.85; margin-bottom: 1.1em; }
+    .about-body p:last-child { margin-bottom: 0; }
+    .skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.5rem; }
+    .skill { font-size: 12px; color: var(--ink-3); background: #FAFAF9; border: 1px solid var(--rule); padding: 4px 12px; border-radius: 100px; }
 
     /* FOOTER */
-    footer {
-      padding: 2rem 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-text {
-      font-size: 0.8125rem;
-      color: var(--ink-4);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .footer-links a {
-      font-size: 0.8125rem;
-      color: var(--ink-3);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-
+    footer { padding: 1.75rem 0; display: flex; align-items: center; justify-content: space-between; }
+    .footer-text { font-size: 12px; color: #ccc; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: var(--ink-3); text-decoration: none; transition: color 0.15s; }
     .footer-links a:hover { color: var(--ink); }
 
-    /* PASSWORD OVERLAY */
-    .pw-overlay {
-      position: fixed;
-      inset: 0;
-      background: var(--white);
-      z-index: 999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      padding: 2rem;
-    }
-
-    .pw-overlay h2 {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: var(--ink);
-    }
-
-    .pw-overlay p {
-      font-size: 0.875rem;
-      color: var(--ink-3);
-      text-align: center;
-      max-width: 320px;
-    }
-
-    .pw-form {
-      display: flex;
-      gap: 8px;
-    }
-
-    .pw-input {
-      font-family: var(--font-body);
-      font-size: 0.875rem;
-      padding: 0.625rem 1rem;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      outline: none;
-      width: 200px;
-      transition: border-color 0.15s;
-    }
-
-    .pw-input:focus { border-color: var(--ink-3); }
-
-    .pw-submit {
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      padding: 0.625rem 1.25rem;
-      background: var(--ink);
-      color: var(--white);
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .pw-submit:hover { background: var(--ink-2); }
-    .pw-error { font-size: 0.8125rem; color: #C0392B; display: none; }
+    /* PASSWORD */
+    .pw-overlay { position: fixed; inset: 0; background: var(--white); z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.25rem; padding: 2rem; }
+    .pw-overlay h2 { font-size: 1.125rem; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); }
+    .pw-overlay p { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 280px; line-height: 1.6; }
+    .pw-form { display: flex; gap: 8px; }
+    .pw-input { font-family: var(--font); font-size: 13px; padding: 9px 14px; border: 1px solid var(--rule); border-radius: 100px; outline: none; width: 190px; transition: border-color 0.15s; }
+    .pw-input:focus { border-color: #aaa; }
+    .pw-submit { font-family: var(--font); font-size: 12px; font-weight: 500; padding: 9px 18px; background: var(--ink); color: #fff; border: none; border-radius: 100px; cursor: pointer; }
+    .pw-error { font-size: 12px; color: #C0392B; display: none; }
     .pw-error.visible { display: block; }
 
-    /* RESPONSIVE */
     @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero-bottom { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
       .case-featured { grid-template-columns: 1fr; gap: 1.5rem; }
       .cases-grid { grid-template-columns: 1fr; }
-      .about-strip { grid-template-columns: 1fr; gap: 1rem; }
-      .nav-links { gap: 1.25rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 1rem; }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; }
-    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   </style>
 </head>
 <body>
 
-  <!-- PASSWORD OVERLAY -->
   <div class="pw-overlay" id="pwOverlay">
     <h2>Carla Ottaviano</h2>
-    <p>This portfolio is password protected. Please enter the password to continue.</p>
+    <p>This portfolio is password protected.</p>
     <div class="pw-form">
       <input class="pw-input" type="password" id="pwInput" placeholder="Password" autocomplete="off" />
       <button class="pw-submit" onclick="checkPassword()">Enter</button>
     </div>
-    <span class="pw-error" id="pwError">Incorrect password. Try again.</span>
+    <span class="pw-error" id="pwError">Incorrect password.</span>
   </div>
 
-  <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-name">Carla Ottaviano</a>
     <ul class="nav-links">
@@ -501,104 +126,86 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <div class="hero-eyebrow">Available for new roles</div>
-      <h1>Senior Product Designer focused on <em>EdTech</em> and AI</h1>
-      <p class="hero-sub">8+ years designing teacher and student-facing products. Background in graphic design. Currently building AI-powered features at Nearpod&nbsp;/&nbsp;Renaissance Learning.</p>
-      <div class="hero-actions">
-        <a href="#work" class="btn btn-primary">See my work</a>
-        <a href="mailto:carlu.ottaviano@gmail.com" class="btn btn-ghost">carlu.ottaviano@gmail.com</a>
+      <div class="hero-top">
+        <div class="hero-eyebrow">Available for new roles</div>
+        <span class="hero-role">Senior Product Designer</span>
+      </div>
+      <h1>EdTech & AI <em>product designer</em></h1>
+      <div class="hero-bottom">
+        <p class="hero-sub">8+ years designing teacher and student-facing products. Background in graphic design. Currently at Nearpod / Renaissance Learning.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">See my work</a>
+          <a href="mailto:carlu.ottaviano@gmail.com" class="btn btn-ghost">Contact</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- WORK -->
   <section class="section" id="work">
     <div class="container">
-      <div class="section-header">
-        <span class="section-label">Selected work</span>
-      </div>
-
-      <!-- Featured case study -->
+      <p class="section-label">Selected work</p>
       <a href="case-study-ai-activity-suggestions.html" class="case-featured">
         <div class="case-thumb">
-          <!-- Replace with: src="images/hero-ai-suggestions.png" -->
-          <svg class="case-thumb-placeholder" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 4L28.5 18H43L31.5 27L36 41L24 32L12 41L16.5 27L5 18H19.5L24 4Z" fill="currentColor"/>
-          </svg>
+          <img src="images/hero-ai-suggestions.png" alt="AI Activity Suggestions" onerror="this.parentElement.innerHTML='<span class=\'case-thumb-icon\'>✦</span>'" />
         </div>
-        <div class="case-meta">
-          <div class="case-tags">
-            <span class="tag">Nearpod</span>
-            <span class="tag">AI feature</span>
-            <span class="tag">EdTech</span>
-          </div>
+        <div>
+          <div class="case-tags"><span class="tag">Nearpod</span><span class="tag">AI feature</span><span class="tag">EdTech</span></div>
           <h2 class="case-title">AI Activity Suggestions</h2>
           <p class="case-desc">Designing AI-powered recommendations that help teachers create more engaging lessons — from kickoff to user-tested prototype in five weeks.</p>
-          <span class="case-link">
-            Read case study
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          <span class="case-link">Read case study →</span>
         </div>
       </a>
-
-      <!-- Secondary cards -->
       <div class="cases-grid">
         <div class="case-card">
           <div class="case-card-thumb">
-            <!-- Replace with: <img src="images/thumb-lesson-builder.png" alt="Lesson Builder redesign"> -->
+            <img src="images/thumb-lesson-builder.png" alt="Lesson Builder" onerror="this.style.display='none'" />
           </div>
           <div class="case-tags"><span class="tag">Nearpod</span><span class="tag">Core product</span></div>
           <h3 class="case-title">Lesson Builder redesign</h3>
-          <p class="case-desc">Unified all activity types into a single view with filmstrip navigation — Nearpod's main lesson creation tool.</p>
-          <p style="font-size:0.75rem;color:var(--ink-4);margin-top:1rem;">Case study coming soon</p>
+          <p class="case-desc">Unified all activity types into a single view with filmstrip navigation.</p>
+          <p style="font-size:11px;color:#ccc;margin-top:0.75rem">Case study coming soon</p>
         </div>
-
         <div class="case-card">
           <div class="case-card-thumb">
-            <!-- Replace with: <img src="images/thumb-tiendanube.png" alt="Tiendanube catalog"> -->
+            <img src="images/thumb-tiendanube.png" alt="Tiendanube" onerror="this.style.display='none'" />
           </div>
           <div class="case-tags"><span class="tag">Tiendanube</span><span class="tag">E-commerce</span></div>
           <h3 class="case-title">Product & inventory management</h3>
-          <p class="case-desc">Lead designer for the merchant catalog experience across 94K+ stores in Argentina, Brazil, and Mexico.</p>
-          <p style="font-size:0.75rem;color:var(--ink-4);margin-top:1rem;">Case study coming soon</p>
+          <p class="case-desc">Lead designer for the merchant catalog across 94K+ stores in LATAM.</p>
+          <p style="font-size:11px;color:#ccc;margin-top:0.75rem">Case study coming soon</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="about-strip" id="about">
-    <div class="container" style="display:contents">
-      <div style="padding: 0 clamp(1.5rem, 5vw, 4rem);">
-        <span class="about-strip-label">About</span>
+  <div class="about-grid" id="about">
+    <div style="padding: 0 clamp(1.5rem, 6vw, 5rem);">
+      <p class="section-label">About</p>
+    </div>
+    <div style="padding: clamp(3rem, 8vw, 5.5rem) clamp(1.5rem, 6vw, 5rem) clamp(3rem, 8vw, 5.5rem) 0;">
+      <div class="about-body">
+        <p>I'm a Senior Product Designer with 8+ years of experience, currently embedded with the Nearpod / Renaissance Learning team through PSh. I design teacher and student-facing features end-to-end, from discovery and research through to QA and the occasional pull request.</p>
+        <p>My career started in graphic design, which gave me a strong visual foundation I still rely on every day. That background shapes how I approach design systems, visual hierarchy, and the craft side of product work.</p>
+        <p>Lately I've been focused on AI-powered features: activity suggestions, lesson generation, and an AI teaching assistant concept still in the works. I also use AI extensively in my own workflow, from prototyping with Claude Code to generating documentation and automating design QA.</p>
+        <p>I work remotely with US-based cross-functional teams from Buenos Aires. I work in English and Spanish, and speak some Portuguese.</p>
+        <p>Outside of work I knit constantly, always mid-project and usually something more ambitious than I planned. And I share my couch with Helena, a greyhound who has claimed the entire couch as her own.</p>
       </div>
-      <div style="padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 8vw, 6rem) 0;">
-        <div class="about-text">
-          <p>I'm a Senior Product Designer with 8+ years of experience, currently embedded with the Nearpod / Renaissance Learning team through PSh. I design teacher and student-facing features end-to-end, from discovery and research through to QA and the occasional pull request.</p>
-          <p>My career started in graphic design, which gave me a strong visual foundation I still rely on every day. That background shapes how I approach design systems, visual hierarchy, and the craft side of product work.</p>
-          <p>Lately I've been focused on AI-powered features: activity suggestions, lesson generation, and an AI teaching assistant concept still in the works. I also use AI extensively in my own workflow, from prototyping with Claude Code to generating documentation and automating design QA.</p>
-          <p>I work remotely with US-based cross-functional teams from Buenos Aires. I work in English and Spanish, and speak some Portuguese.</p>
-          <p>Outside of work I knit constantly, always mid-project and usually something more ambitious than I planned. And I share my couch with Helena, a greyhound who has claimed the entire couch as her own.</p>
-        </div>
-        <div class="skills-row">
-          <span class="skill-pill">End-to-end design</span>
-          <span class="skill-pill">AI feature design</span>
-          <span class="skill-pill">Design systems</span>
-          <span class="skill-pill">User research</span>
-          <span class="skill-pill">Prototyping</span>
-          <span class="skill-pill">Front-end QA</span>
-          <span class="skill-pill">Figma</span>
-          <span class="skill-pill">HTML / CSS</span>
-          <span class="skill-pill">Graphic design</span>
-        </div>
+      <div class="skills">
+        <span class="skill">End-to-end design</span>
+        <span class="skill">AI feature design</span>
+        <span class="skill">Design systems</span>
+        <span class="skill">User research</span>
+        <span class="skill">Prototyping</span>
+        <span class="skill">Front-end QA</span>
+        <span class="skill">Figma</span>
+        <span class="skill">HTML / CSS</span>
+        <span class="skill">Graphic design</span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- FOOTER -->
   <div class="container">
     <footer>
       <span class="footer-text">Buenos Aires, Argentina</span>
@@ -610,9 +217,7 @@
   </div>
 
   <script>
-    // Change this to your actual password
     const PORTFOLIO_PASSWORD = 'helena2025';
-
     function checkPassword() {
       const input = document.getElementById('pwInput').value;
       const error = document.getElementById('pwError');
@@ -625,15 +230,8 @@
         document.getElementById('pwInput').focus();
       }
     }
-
-    document.getElementById('pwInput').addEventListener('keydown', e => {
-      if (e.key === 'Enter') checkPassword();
-    });
-
-    // Keep unlocked within the same session
-    if (sessionStorage.getItem('portfolio_auth') === 'true') {
-      document.getElementById('pwOverlay').style.display = 'none';
-    }
+    document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
+    if (sessionStorage.getItem('portfolio_auth') === 'true') document.getElementById('pwOverlay').style.display = 'none';
   </script>
 </body>
 </html>
