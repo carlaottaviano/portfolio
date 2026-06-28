@@ -244,6 +244,16 @@
     .pw-error { font-size: 0.8125rem; color: #C0392B; display: none; }
     .pw-error.visible { display: block; }
 
+    /* LIGHTBOX */
+    .lightbox-trigger { cursor: zoom-in; }
+    .lightbox-trigger img { transition: opacity 0.15s; }
+    .lightbox-trigger:hover img { opacity: 0.9; }
+    .lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; display: none; align-items: center; justify-content: center; padding: 2rem; cursor: zoom-out; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+    .lightbox-close { position: fixed; top: 1.25rem; right: 1.25rem; width: 36px; height: 36px; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; transition: background 0.15s; }
+    .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
     @media (max-width: 640px) {
       .img-grid, .img-side, .stats-grid, .quotes-grid { grid-template-columns: 1fr; }
     }
@@ -287,7 +297,7 @@
       </div>
 
       <!-- HERO IMAGE — replace src with your actual image -->
-      <div class="hero-img">
+      <div class="hero-img lightbox-trigger">
         <img src="images/ai-activity-suggestions/hero-ai-suggestions.png" alt="AI Activity Suggestions panel inside the Lesson Builder" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Hero image — panel de sugerencias dentro del Lesson Builder</p>'" />
       </div>
       <p class="img-caption">The AI Activity Suggestions panel inside the Lesson Builder — teachers can select, review, and add AI-generated activities without leaving their workflow.</p>
@@ -322,26 +332,26 @@
 
       <p class="img-label" style="margin-top:1.5rem">Competitive analysis — Curipod, Notion AI, Canva, Quizizz</p>
       <div class="img-grid">
-        <div class="img-grid-item">
+        <div class="img-grid-item lightbox-trigger">
           <img src="images/ai-activity-suggestions/comp-curipod.png" alt="Curipod" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Curipod</p>'" />
         </div>
-        <div class="img-grid-item">
+        <div class="img-grid-item lightbox-trigger">
           <img src="images/ai-activity-suggestions/comp-notion.png" alt="Notion AI" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Notion AI</p>'" />
         </div>
-        <div class="img-grid-item">
+        <div class="img-grid-item lightbox-trigger">
           <img src="images/ai-activity-suggestions/comp-canva.png" alt="Canva Magic Write" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Canva</p>'" />
         </div>
-        <div class="img-grid-item">
+        <div class="img-grid-item lightbox-trigger">
           <img src="images/ai-activity-suggestions/comp-quizizz.png" alt="Quizizz" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Quizizz</p>'" />
         </div>
       </div>
 
       <p class="img-label">Early wireframe → final design</p>
       <div class="img-side">
-        <div class="img-side-item">
+        <div class="img-side-item lightbox-trigger">
           <img src="images/ai-activity-suggestions/wireframe-panel.png" alt="Wireframe del panel de sugerencias" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Wireframe</p>'" />
         </div>
-        <div class="img-side-item">
+        <div class="img-side-item lightbox-trigger">
           <img src="images/ai-activity-suggestions/final-panel.png" alt="Diseño final del panel de sugerencias" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Final design</p>'" />
         </div>
       </div>
@@ -357,7 +367,7 @@
         <p class="decision-body">We debated whether to hide the entry point when a lesson didn't meet the criteria for AI suggestions. We decided to always show it — with a clear explanation of why it wasn't available and how to fix that. Hiding it would have made the feature feel unreliable or random.</p>
       </div>
 
-      <div class="img-full">
+      <div class="img-full lightbox-trigger">
         <img src="images/ai-activity-suggestions/entry-popover.png" alt="Entry point popover" onerror="this.innerHTML='<p class=\'img-placeholder-label\'>📷 Entry point popover — the \'Check out the custom activities\' message</p>'" />
       </div>
       <p class="img-caption">The entry point popover — shown proactively when a teacher opens a lesson without activities.</p>
@@ -367,7 +377,7 @@
         <p class="decision-body">We considered a modal to let teachers choose between creating a lesson from scratch or enhancing existing slides — before deciding a more integrated, contextual approach worked better for the MVP.</p>
       </div>
 
-      <div class="img-full">
+      <div class="img-full lightbox-trigger">
         <img src="images/ai-activity-suggestions/wireframe-modal.png" alt="Early modal proposal" onerror="this.innerHTML='<p class=\'img-placeholder-label\'>📷 Early modal proposal — Create a lesson / Enhance my slides</p>'" />
       </div>
       <p class="img-caption">An early proposal we explored and set aside — options on the table, decision made consciously.</p>
@@ -484,6 +494,12 @@
 
   </div>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-label="Image preview">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+    <img src="" alt="" id="lightboxImg" />
+  </div>
+
   <script>
     const PORTFOLIO_PASSWORD = 'helena2025';
 
@@ -507,6 +523,28 @@
     if (sessionStorage.getItem('portfolio_auth') === 'true') {
       document.getElementById('pwOverlay').style.display = 'none';
     }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+
+    document.querySelectorAll('.lightbox-trigger img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>
