@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Activity Suggestions — Carla Ottaviano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #FAFAF9;
+      --ink: #111110;
+      --ink-2: #3C3C38;
+      --ink-3: #6E6E68;
+      --ink-4: #A8A8A2;
+      --rule: #E8E8E4;
+      --accent-light: #F0EFE8;
+      --blue-light: #EFF6FF;
+      --blue: #1A56DB;
+      --font-display: 'Lora', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--ink); font-family: var(--font-body); font-weight: 400; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 56px; display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-name { font-family: var(--font-display); font-size: 1rem; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 0.8125rem; color: var(--ink-3); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.15s; }
+    .nav-back:hover { color: var(--ink); }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 2.5rem); }
+
+    /* HERO */
+    .cs-hero {
+      padding-top: calc(56px + 4rem);
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .cs-eyebrow {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink-4); margin-bottom: 1rem;
+    }
+
+    .cs-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.875rem, 4vw, 2.75rem);
+      font-weight: 400; line-height: 1.2; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 1.25rem;
+    }
+
+    .cs-meta-row {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+
+    .tag {
+      font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--ink-3);
+      background: var(--off-white); border: 1px solid var(--rule);
+      padding: 3px 8px; border-radius: 3px;
+    }
+
+    /* HERO IMAGE */
+    .hero-img {
+      width: 100%; aspect-ratio: 16/9;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--rule);
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .img-caption {
+      font-size: 0.75rem; color: var(--ink-4); text-align: center;
+      margin-bottom: 2rem; font-style: italic;
+    }
+
+    /* SECTIONS */
+    .cs-section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+    .cs-section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-4); margin-bottom: 1.25rem;
+    }
+
+    .cs-body p {
+      font-size: 0.9375rem; color: var(--ink-2); line-height: 1.8; margin-bottom: 1.1em;
+    }
+    .cs-body p:last-child { margin-bottom: 0; }
+
+    /* IMAGES */
+    .img-full {
+      width: 100%; border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--rule); margin: 1.5rem 0;
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 200px;
+    }
+    .img-full img { width: 100%; display: block; }
+
+    .img-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin: 1.5rem 0;
+    }
+
+    .img-grid-item {
+      border-radius: 6px; overflow: hidden; border: 1px solid var(--rule);
+      background: var(--accent-light); min-height: 140px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .img-grid-item img { width: 100%; display: block; }
+
+    .img-side {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin: 1.5rem 0; align-items: start;
+    }
+
+    .img-side-item {
+      border-radius: 6px; overflow: hidden; border: 1px solid var(--rule);
+      background: var(--accent-light); min-height: 140px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .img-side-item img { width: 100%; display: block; }
+
+    .img-label {
+      font-size: 0.6875rem; color: var(--ink-4); font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+
+    /* PLACEHOLDER label inside img boxes */
+    .img-placeholder-label {
+      font-size: 0.75rem; color: var(--ink-4); text-align: center; padding: 1rem;
+    }
+
+    /* STAT ROW */
+    .stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 1.5rem 0;
+    }
+
+    .stat-card {
+      background: var(--off-white); border: 1px solid var(--rule);
+      border-radius: 6px; padding: 1.125rem 1.25rem;
+    }
+
+    .stat-number {
+      font-family: var(--font-display); font-size: 1.75rem;
+      font-weight: 400; color: var(--ink); margin-bottom: 4px; line-height: 1;
+    }
+
+    .stat-label { font-size: 0.8125rem; color: var(--ink-3); line-height: 1.4; }
+
+    /* DECISION BOXES */
+    .decision {
+      border-left: 2px solid var(--rule); padding: 0.875rem 1.25rem;
+      margin: 1rem 0; background: var(--off-white); border-radius: 0 4px 4px 0;
+    }
+
+    .decision-title {
+      font-size: 0.9375rem; font-weight: 500; color: var(--ink); margin-bottom: 6px;
+    }
+
+    .decision-body { font-size: 0.875rem; color: var(--ink-3); line-height: 1.65; }
+
+    /* QUOTES */
+    .quotes-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 1.5rem 0;
+    }
+
+    .quote-card {
+      background: var(--blue-light); border-radius: 6px;
+      padding: 1rem 1.125rem; border: 1px solid #DBEAFE;
+    }
+
+    .quote-text {
+      font-size: 0.875rem; font-style: italic; color: #1E3A8A;
+      line-height: 1.6; margin-bottom: 8px;
+    }
+
+    .quote-attr { font-size: 0.75rem; color: #6B7DB3; }
+
+    .quote-highlight {
+      background: var(--ink); border-radius: 6px;
+      padding: 1.25rem 1.5rem; margin: 1.25rem 0;
+    }
+
+    .quote-highlight p {
+      font-family: var(--font-display); font-size: 1.0625rem; font-style: italic;
+      color: var(--white); line-height: 1.5; text-align: center;
+    }
+
+    /* LEARNED */
+    .learned-item {
+      display: grid; grid-template-columns: 2rem 1fr; gap: 1rem;
+      margin-bottom: 1.5rem; align-items: start;
+    }
+
+    .learned-num { font-size: 0.8125rem; color: var(--ink-4); font-weight: 500; padding-top: 3px; }
+
+    .learned-title {
+      font-size: 0.9375rem; font-weight: 500; color: var(--ink); margin-bottom: 4px;
+    }
+
+    .learned-body { font-size: 0.875rem; color: var(--ink-3); line-height: 1.65; }
+
+    /* NEXT CASE */
+    .next-case {
+      padding: 3rem 0; display: flex; align-items: center; justify-content: space-between;
+      text-decoration: none; color: inherit; border-top: 1px solid var(--rule);
+      transition: opacity 0.15s;
+    }
+    .next-case:hover { opacity: 0.6; }
+    .next-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 4px; }
+    .next-title { font-family: var(--font-display); font-size: 1.125rem; font-weight: 400; color: var(--ink); }
+
+    /* PASSWORD */
+    .pw-overlay {
+      position: fixed; inset: 0; background: var(--white); z-index: 999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.5rem; padding: 2rem;
+    }
+    .pw-overlay h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--ink); }
+    .pw-overlay p { font-size: 0.875rem; color: var(--ink-3); text-align: center; max-width: 320px; }
+    .pw-form { display: flex; gap: 8px; }
+    .pw-input { font-family: var(--font-body); font-size: 0.875rem; padding: 0.625rem 1rem; border: 1px solid var(--rule); border-radius: 4px; outline: none; width: 200px; transition: border-color 0.15s; }
+    .pw-input:focus { border-color: var(--ink-3); }
+    .pw-submit { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 500; padding: 0.625rem 1.25rem; background: var(--ink); color: var(--white); border: none; border-radius: 4px; cursor: pointer; }
+    .pw-error { font-size: 0.8125rem; color: #C0392B; display: none; }
+    .pw-error.visible { display: block; }
+
+    @media (max-width: 640px) {
+      .img-grid, .img-side, .stats-grid, .quotes-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- PASSWORD OVERLAY -->
+  <div class="pw-overlay" id="pwOverlay">
+    <h2>Carla Ottaviano</h2>
+    <p>This portfolio is password protected. Please enter the password to continue.</p>
+    <div class="pw-form">
+      <input class="pw-input" type="password" id="pwInput" placeholder="Password" autocomplete="off" />
+      <button class="pw-submit" onclick="checkPassword()">Enter</button>
+    </div>
+    <span class="pw-error" id="pwError">Incorrect password. Try again.</span>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-name">Carla Ottaviano</a>
+    <a href="index.html#work" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All work
+    </a>
+  </nav>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="cs-hero">
+      <p class="cs-eyebrow">Nearpod / Renaissance Learning · May–June 2025</p>
+      <h1 class="cs-title">AI Activity Suggestions</h1>
+      <div class="cs-meta-row">
+        <span class="tag">AI feature design</span>
+        <span class="tag">EdTech</span>
+        <span class="tag">User research</span>
+        <span class="tag">5 weeks</span>
+      </div>
+
+      <!-- HERO IMAGE — replace src with your actual image -->
+      <div class="hero-img">
+        <img src="images/hero-ai-suggestions.png" alt="AI Activity Suggestions panel inside the Lesson Builder" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Hero image — panel de sugerencias dentro del Lesson Builder</p>'" />
+      </div>
+      <p class="img-caption">The AI Activity Suggestions panel inside the Lesson Builder — teachers can select, review, and add AI-generated activities without leaving their workflow.</p>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="cs-section">
+      <p class="section-label">Overview</p>
+      <div class="cs-body">
+        <p>Nearpod is an EdTech platform where teachers build and run interactive lessons. The problem: over 60% of lessons on the platform had no interactive activities — which defeats the core value of using Nearpod in the first place.</p>
+        <p>I designed a feature that scans a teacher's existing lesson content and suggests relevant activities to add, using AI. I worked in a two-designer team alongside Nicole, collaborating with two PMs, a UX researcher, and a UX writer. We went from kickoff to user-tested prototype in five weeks.</p>
+      </div>
+    </div>
+
+    <!-- THE PROBLEM -->
+    <div class="cs-section">
+      <p class="section-label">The problem</p>
+      <div class="cs-body">
+        <p>Teachers were uploading their presentations to Nearpod but not adding activities. Some didn't have time. Some didn't know where to start. Some were skeptical of AI-generated content and didn't trust it to match their material.</p>
+        <p>Our starting insight: if we could meet teachers inside their existing lesson, rather than asking them to create something new, we had a better chance of earning their trust.</p>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="cs-section">
+      <p class="section-label">Process</p>
+      <div class="cs-body">
+        <p>We moved fast. By day three we had sketches in front of the PMs — earlier than anyone expected. Nicole and I worked separately on initial ideas, then compared notes and found we were mostly aligned. That made the first round of decisions easy.</p>
+        <p>Early on we mapped three different AI features already in Nearpod and realized none of their names made it clear what each one did or how they differed. We looped in our UX writer — her recommendation: rename everything around the action, not the technology. "Add Activities with AI" instead of "AI Enhance."</p>
+        <p>We ran an unmoderated usability test with real teachers before handoff. One decision that shaped the test: we shifted the entry point from the upload flow to an existing lesson, based on the metric driving the project. If 60% of lessons lacked activities, the teachers who needed this most were the ones who already had lessons sitting there.</p>
+      </div>
+
+      <p class="img-label" style="margin-top:1.5rem">Competitive analysis — Curipod, Notion AI, Canva, Quizizz</p>
+      <div class="img-grid">
+        <div class="img-grid-item">
+          <img src="images/comp-curipod.png" alt="Curipod" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Curipod</p>'" />
+        </div>
+        <div class="img-grid-item">
+          <img src="images/comp-notion.png" alt="Notion AI" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Notion AI</p>'" />
+        </div>
+        <div class="img-grid-item">
+          <img src="images/comp-canva.png" alt="Canva Magic Write" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Canva</p>'" />
+        </div>
+        <div class="img-grid-item">
+          <img src="images/comp-quizizz.png" alt="Quizizz" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Quizizz</p>'" />
+        </div>
+      </div>
+
+      <p class="img-label">Early wireframe → final design</p>
+      <div class="img-side">
+        <div class="img-side-item">
+          <img src="images/wireframe-panel.png" alt="Wireframe del panel de sugerencias" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Wireframe</p>'" />
+        </div>
+        <div class="img-side-item">
+          <img src="images/final-panel.png" alt="Diseño final del panel de sugerencias" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Final design</p>'" />
+        </div>
+      </div>
+      <p class="img-caption">From early wireframe to final design — the core concept of an inline suggestions panel stayed consistent throughout.</p>
+    </div>
+
+    <!-- KEY DECISIONS -->
+    <div class="cs-section">
+      <p class="section-label">Key decisions</p>
+
+      <div class="decision">
+        <p class="decision-title">Showing the feature even when it can't run</p>
+        <p class="decision-body">We debated whether to hide the entry point when a lesson didn't meet the criteria for AI suggestions. We decided to always show it — with a clear explanation of why it wasn't available and how to fix that. Hiding it would have made the feature feel unreliable or random.</p>
+      </div>
+
+      <div class="img-full">
+        <img src="images/entry-popover.png" alt="Entry point popover" onerror="this.innerHTML='<p class=\'img-placeholder-label\'>📷 Entry point popover — the \'Check out the custom activities\' message</p>'" />
+      </div>
+      <p class="img-caption">The entry point popover — shown proactively when a teacher opens a lesson without activities.</p>
+
+      <div class="decision">
+        <p class="decision-title">Exploring entry point options</p>
+        <p class="decision-body">We considered a modal to let teachers choose between creating a lesson from scratch or enhancing existing slides — before deciding a more integrated, contextual approach worked better for the MVP.</p>
+      </div>
+
+      <div class="img-full">
+        <img src="images/wireframe-modal.png" alt="Early modal proposal" onerror="this.innerHTML='<p class=\'img-placeholder-label\'>📷 Early modal proposal — Create a lesson / Enhance my slides</p>'" />
+      </div>
+      <p class="img-caption">An early proposal we explored and set aside — options on the table, decision made consciously.</p>
+
+      <div class="decision">
+        <p class="decision-title">Scoping the MVP</p>
+        <p class="decision-body">We pulled two entry points out of scope: the upload flow and the lesson menu. Not because they weren't valuable, but because we didn't want to compete with a separate Activity Picker redesign happening at the same time, and we didn't want to overwhelm teachers with too many paths to the same place.</p>
+      </div>
+
+      <div class="decision">
+        <p class="decision-title">Handling edge cases in placement</p>
+        <p class="decision-body">When a teacher generates suggestions, we tell them where each activity will be placed. But what if they edit the lesson before adding them? If nothing changed, activities go where we promised. If the lesson changed, they go to the end — and a toast message explains why.</p>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="cs-section">
+      <p class="section-label">Results</p>
+      <div class="cs-body">
+        <p>An unmoderated usability test with 10 participants — 5 current Nearpod users and 5 non-users — validated the core flow before handoff with strong results across usability, trust, and intent to use.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-number">10/10</p>
+          <p class="stat-label">understood the intent of the feature</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">10/10</p>
+          <p class="stat-label">likely or very likely to use it</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">10/10</p>
+          <p class="stat-label">able to choose which activities to add</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">9/10</p>
+          <p class="stat-label">satisfied with how activities were placed</p>
+        </div>
+      </div>
+
+      <div class="img-grid">
+        <div class="img-grid-item">
+          <img src="images/research-usability.png" alt="Research slide — Usability is high" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Research slide — Usability is high</p>'" />
+        </div>
+        <div class="img-grid-item">
+          <img src="images/research-thoughts.png" alt="Research slide — User thoughts" onerror="this.parentElement.innerHTML='<p class=\'img-placeholder-label\'>📷 Research slide — User thoughts</p>'" />
+        </div>
+      </div>
+      <p class="img-caption">Slides from the research report presented at Design Review — June 2025</p>
+
+      <div class="quotes-grid">
+        <div class="quote-card">
+          <p class="quote-text">"It takes out the guesswork for engagement."</p>
+          <p class="quote-attr">Current Nearpod user</p>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">"I use ChatGPT all the time, but this is even better."</p>
+          <p class="quote-attr">Non-Nearpod user</p>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">"It is absolutely crystal clear — it tells me what's gonna be added and where."</p>
+          <p class="quote-attr">Current Nearpod user</p>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">"It cuts down on my time from having to create these activities."</p>
+          <p class="quote-attr">Non-Nearpod user</p>
+        </div>
+      </div>
+
+      <div class="quote-highlight">
+        <p>"Another teacher called it their Nearpod co-teacher."</p>
+      </div>
+
+      <div class="img-full">
+        <img src="images/research-entrypoints.png" alt="Research slide — entry points" onerror="this.innerHTML='<p class=\'img-placeholder-label\'>📷 Research slide — Other entry points</p>'" />
+      </div>
+      <p class="img-caption">The entry point findings validated our MVP scope — the in-lesson experience was well received, while a home screen entry point showed mixed reactions.</p>
+
+      <div class="cs-body" style="margin-top:1.5rem">
+        <p>The research also validated our scope decision: 8 of 10 teachers preferred getting suggestions while actively building a lesson, which confirmed that pulling the home screen entry point from the MVP was the right call. The feature shipped with a measurement framework in place to track engagement, adoption, and quality after release — against a baseline of ~40% of lessons having no activities.</p>
+      </div>
+    </div>
+
+    <!-- WHAT I LEARNED -->
+    <div class="cs-section">
+      <p class="section-label">What I learned</p>
+
+      <div class="learned-item">
+        <span class="learned-num">01</span>
+        <div>
+          <p class="learned-title">Two designers, better decisions</p>
+          <p class="learned-body">Nicole and I complemented each other's strengths. Having someone to pressure-test ideas with in real time — not just in formal critiques — changed the quality of the decisions we made early on. Both of us watched every research session, which meant we could act on findings immediately without losing anything in translation.</p>
+        </div>
+      </div>
+
+      <div class="learned-item">
+        <span class="learned-num">02</span>
+        <div>
+          <p class="learned-title">Structure creates speed</p>
+          <p class="learned-body">We built a detailed UX/research schedule at the start, identified risks and open questions early, and ran weekly check-ins with PMs throughout. That rhythm meant we never lost a week to misalignment. While we waited for user test results, we used the time to start the handoff file — which let us move faster once the findings came in.</p>
+        </div>
+      </div>
+
+      <div class="learned-item">
+        <span class="learned-num">03</span>
+        <div>
+          <p class="learned-title">Naming is design</p>
+          <p class="learned-body">The conversation about what to call this feature took more time than expected, and it was worth every minute. The name was the first thing teachers would see, and it needed to do a lot of work.</p>
+        </div>
+      </div>
+
+      <div class="learned-item">
+        <span class="learned-num">04</span>
+        <div>
+          <p class="learned-title">Scope decisions are design decisions</p>
+          <p class="learned-body">Knowing what to leave out — and being able to articulate why — was as important as knowing what to build.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXT -->
+    <a href="index.html#work" class="next-case">
+      <div>
+        <p class="next-label">Next</p>
+        <p class="next-title">Lesson Builder redesign →</p>
+      </div>
+    </a>
+
+  </div>
+
+  <script>
+    const PORTFOLIO_PASSWORD = 'helena2025';
+
+    function checkPassword() {
+      const input = document.getElementById('pwInput').value;
+      const error = document.getElementById('pwError');
+      if (input === PORTFOLIO_PASSWORD) {
+        document.getElementById('pwOverlay').style.display = 'none';
+        sessionStorage.setItem('portfolio_auth', 'true');
+      } else {
+        error.classList.add('visible');
+        document.getElementById('pwInput').value = '';
+        document.getElementById('pwInput').focus();
+      }
+    }
+
+    document.getElementById('pwInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkPassword();
+    });
+
+    if (sessionStorage.getItem('portfolio_auth') === 'true') {
+      document.getElementById('pwOverlay').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
