@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Teacher Studio — Carla Ottaviano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff;
+      --off-white: #FAFAF9;
+      --ink: #111110;
+      --ink-2: #3C3C38;
+      --ink-3: #6E6E6A;
+      --ink-4: #A8A8A2;
+      --rule: #EFEFED;
+      --accent-light: #F0EFE8;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--ink); font-family: var(--font); font-weight: 400; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); padding: 0 clamp(1.5rem, 5vw, 4rem); height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-name { font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+    .nav-back { font-size: 12px; color: var(--ink-3); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.15s; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-back svg { flex-shrink: 0; }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 2.5rem); }
+
+    /* HEADER */
+    .cs-hero { padding-top: calc(52px + 4rem); padding-bottom: 3rem; border-bottom: 1px solid var(--rule); }
+    .cs-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 1rem; }
+    .cs-title { font-size: clamp(1.875rem, 4vw, 2.75rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 1.25rem; }
+    .cs-meta-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .tag { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); background: var(--off-white); border: 1px solid var(--rule); padding: 3px 8px; border-radius: 3px; }
+
+    /* IMAGES */
+    .img-full { width: 100%; border-radius: 8px; overflow: hidden; margin: 1.5rem 0; border: 1px solid var(--rule); background: var(--accent-light); display: flex; align-items: center; justify-content: center; min-height: 180px; }
+    .img-full img { width: 100%; display: block; }
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 1.5rem 0; }
+    .img-grid-item { border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); background: var(--accent-light); min-height: 120px; display: flex; align-items: center; justify-content: center; }
+    .img-grid-item img { width: 100%; display: block; }
+    .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 1.5rem 0; }
+    .img-grid-3-item { border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); background: var(--accent-light); min-height: 100px; display: flex; flex-direction: column; }
+    .img-grid-3-item img { width: 100%; display: block; }
+    .img-grid-3-label { font-size: 11px; font-weight: 500; color: var(--ink-3); padding: 6px 8px; border-top: 1px solid var(--rule); background: var(--off-white); }
+    .img-side { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 1.5rem 0; align-items: start; }
+    .img-side-item { border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); background: var(--accent-light); min-height: 120px; display: flex; align-items: center; justify-content: center; }
+    .img-side-item img { width: 100%; display: block; }
+    .img-caption { font-size: 12px; color: var(--ink-3); text-align: center; margin-top: 6px; font-style: italic; }
+    .img-label { font-size: 11px; color: var(--ink-3); font-style: italic; margin-bottom: 0.5rem; }
+
+    /* COMP GRID — featured 2 + small 4 */
+    .comp-featured { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .comp-featured-card { border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); background: var(--off-white); }
+    .comp-featured-thumb { background: var(--accent-light); aspect-ratio: 16/9; overflow: hidden; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; }
+    .comp-featured-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .comp-featured-body { padding: 0.875rem; }
+    .comp-featured-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .comp-featured-note { font-size: 12px; color: var(--ink-3); line-height: 1.6; }
+    .comp-small-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 0.75rem; }
+    .comp-small-card { border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); background: var(--off-white); }
+    .comp-small-thumb { background: var(--accent-light); aspect-ratio: 16/9; overflow: hidden; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; }
+    .comp-small-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .comp-small-body { padding: 0.5rem 0.625rem; }
+    .comp-small-name { font-size: 11px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+    .comp-small-note { font-size: 10px; color: var(--ink-3); line-height: 1.4; }
+
+    /* SECTIONS */
+    .cs-section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+    .cs-section:last-of-type { border-bottom: none; }
+    .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 1.25rem; }
+    .cs-body p { font-size: 14px; color: var(--ink-2); line-height: 1.85; margin-bottom: 1.1em; }
+    .cs-body p:last-child { margin-bottom: 0; }
+
+    /* STAT CARDS */
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 1.5rem 0; }
+    .stat-card { background: var(--off-white); border: 1px solid var(--rule); border-radius: 6px; padding: 1.125rem 1.25rem; }
+    .stat-number { font-size: 1.75rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; line-height: 1; letter-spacing: -0.02em; }
+    .stat-label { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
+
+    /* DECISIONS */
+    .decision { border-left: 2px solid var(--rule); padding: 0.875rem 1.25rem; margin: 1rem 0; background: var(--off-white); border-radius: 0 4px 4px 0; }
+    .decision-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+    .decision-body { font-size: 13px; color: var(--ink-3); line-height: 1.65; }
+
+    /* QUOTE */
+    .quote-highlight { background: var(--ink); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0; }
+    .quote-highlight p { font-size: 1rem; font-style: italic; color: var(--white); line-height: 1.5; text-align: center; }
+
+    /* LEARNED */
+    .learned-item { display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; margin-bottom: 1.5rem; align-items: start; }
+    .learned-num { font-size: 12px; color: var(--ink-3); font-weight: 500; padding-top: 3px; }
+    .learned-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .learned-body { font-size: 13px; color: var(--ink-3); line-height: 1.65; }
+
+    /* NEXT */
+    .next-case { padding: 3rem 0; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: inherit; border-top: 1px solid var(--rule); transition: opacity 0.15s; }
+    .next-case:hover { opacity: 0.6; }
+    .next-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+    .next-title { font-size: 1.125rem; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
+
+    /* LIGHTBOX */
+    .lightbox-trigger { cursor: zoom-in; }
+    .lightbox-trigger img { transition: opacity 0.15s; }
+    .lightbox-trigger:hover img { opacity: 0.9; }
+    .lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; display: none; align-items: center; justify-content: center; padding: 2rem; cursor: zoom-out; }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+    .lightbox-close { position: fixed; top: 1.25rem; right: 1.25rem; width: 36px; height: 36px; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; transition: background 0.15s; }
+    .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+    /* PASSWORD */
+    .pw-overlay { position: fixed; inset: 0; background: var(--white); z-index: 998; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.25rem; padding: 2rem; }
+    .pw-overlay h2 { font-size: 1.125rem; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); }
+    .pw-overlay p { font-size: 13px; color: var(--ink-3); text-align: center; max-width: 280px; line-height: 1.6; }
+    .pw-form { display: flex; gap: 8px; }
+    .pw-input { font-family: var(--font); font-size: 13px; padding: 9px 14px; border: 1px solid var(--rule); border-radius: 100px; outline: none; width: 190px; transition: border-color 0.15s; }
+    .pw-input:focus { border-color: #aaa; }
+    .pw-submit { font-family: var(--font); font-size: 12px; font-weight: 500; padding: 9px 18px; background: var(--ink); color: #fff; border: none; border-radius: 100px; cursor: pointer; }
+    .pw-error { font-size: 12px; color: #C0392B; display: none; }
+    .pw-error.visible { display: block; }
+
+    @media (max-width: 640px) {
+      .img-grid, .img-side, .stats-grid, .comp-featured { grid-template-columns: 1fr; }
+      .comp-small-grid, .img-grid-3 { grid-template-columns: 1fr 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <div class="pw-overlay" id="pwOverlay">
+    <h2>Carla Ottaviano</h2>
+    <p>This portfolio is password protected.</p>
+    <div class="pw-form">
+      <input class="pw-input" type="password" id="pwInput" placeholder="Password" autocomplete="off" />
+      <button class="pw-submit" onclick="checkPassword()">Enter</button>
+    </div>
+    <span class="pw-error" id="pwError">Incorrect password.</span>
+  </div>
+
+  <nav>
+    <a href="index.html" class="nav-name">Carla Ottaviano</a>
+    <a href="index.html#work" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All work
+    </a>
+  </nav>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="cs-hero">
+      <p class="cs-eyebrow">Renaissance Learning · Dec 2025 – present</p>
+      <h1 class="cs-title">AI Teacher Studio</h1>
+      <div class="cs-meta-row">
+        <span class="tag">AI hub design</span>
+        <span class="tag">EdTech</span>
+        <span class="tag">Design systems</span>
+        <span class="tag">Sole designer</span>
+        <span class="tag">5 weeks to MVP</span>
+      </div>
+
+      <div class="img-full lightbox-trigger">
+        <img src="images/ai-teacher-studio/hero-hub.png" alt="AI Teacher Studio hub — seven tools organized by workflow category" onerror="this.parentElement.innerHTML='<p style=\'padding:2rem;font-size:13px;color:#999;text-align:center\'>📷 Hero — hub con las 7 tools</p>'" />
+      </div>
+      <p class="img-caption">AI Teacher Studio inside Renaissance Intelligence — seven tools organized by workflow: Plan, Create, Differentiate, and Assess.</p>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="cs-section">
+      <p class="section-label">Overview</p>
+      <div class="cs-body">
+        <p>Renaissance Learning needed a way to give K-12 teachers access to AI-powered tools for their daily work — planning lessons, creating materials, differentiating content, and assessing students. Teachers were already using tools like ChatGPT and MagicSchool, but those were generic and disconnected from what they already knew about their students.</p>
+        <p>The long-term vision was ambitious: a hub that could eventually leverage Renaissance's years of student assessment data across Star, Nearpod, and Freckle to deliver personalized outputs that no competitor could replicate. For the MVP, the goal was more immediate — ship a suite of high-quality, easy-to-use standalone tools fast, learn from real teachers using them, and build the foundation for that future integration.</p>
+        <p>I was the sole designer on AI Teacher Studio from kickoff through launch and ongoing iterations. Working with a PM, engineering team, UX researcher, and UX writer, we went from zero to a shipped product in five weeks — seven tools live in production, with more in progress.</p>
+      </div>
+    </div>
+
+    <!-- THE PROBLEM -->
+    <div class="cs-section">
+      <p class="section-label">The problem</p>
+      <div class="cs-body">
+        <p>Teachers are overwhelmed and time-poor. Research interviews with 18 K-12 teachers confirmed what we suspected: they use AI daily, but the tools they reach for most aren't purpose-built for education. And when tools feel complex or produce output that needs significant rework before it's classroom-ready, teachers abandon them immediately.</p>
+        <p>Three things kill adoption: interfaces that feel overwhelming, outputs that require too much reformatting, and anything that doesn't actually save time. Those three constraints shaped every design decision we made.</p>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="cs-section">
+      <p class="section-label">Process</p>
+      <div class="cs-body">
+        <p>With five weeks to ship, I had to move fast and be strategic about where I spent time. The first thing I did was audit what we actually needed to design. Seven tools sounds like seven separate projects — but most of them shared the same structure: a header, a form with inputs, a generation state, and an output panel. I mapped what was common across all tools and what varied, then designed a reusable template that could scale to the full suite without starting from scratch each time.</p>
+        <p>Before touching any UI, I did an exhaustive competitive analysis of MagicSchool, SchoolAI, HMH, Pear Start, Khanmigo, and Brisk — full flows, not just screenshots. That analysis fed directly into decisions about form layout, output formatting, and how to handle edge cases.</p>
+      </div>
+
+      <p class="img-label" style="margin-top:1.5rem">Competitive analysis — five EdTech AI tools</p>
+      <div class="comp-featured">
+        <div class="comp-featured-card lightbox-trigger">
+          <div class="comp-featured-thumb">
+            <img src="images/ai-teacher-studio/comp-magicschool.png" alt="MagicSchool dashboard" onerror="this.parentElement.innerHTML='<p style=\'padding:1rem;font-size:11px;color:#999;text-align:center\'>📷 MagicSchool</p>'" />
+          </div>
+          <div class="comp-featured-body">
+            <div class="comp-featured-name">MagicSchool — the anti-example</div>
+            <div class="comp-featured-note">138 tools, no clear hierarchy. Teachers described it as overwhelming — the paradox of choice problem we explicitly designed against.</div>
+          </div>
+        </div>
+        <div class="comp-featured-card lightbox-trigger">
+          <div class="comp-featured-thumb">
+            <img src="images/ai-teacher-studio/comp-pear-start.png" alt="Pear Start navigation" onerror="this.parentElement.innerHTML='<p style=\'padding:1rem;font-size:11px;color:#999;text-align:center\'>📷 Pear Start</p>'" />
+          </div>
+          <div class="comp-featured-body">
+            <div class="comp-featured-name">Pear Start — best nav pattern</div>
+            <div class="comp-featured-note">Workflow-based organization done right. Informed how we structured Plan / Create / Differentiate / Assess.</div>
+          </div>
+        </div>
+      </div>
+      <div class="comp-small-grid">
+        <div class="comp-small-card lightbox-trigger">
+          <div class="comp-small-thumb">
+            <img src="images/ai-teacher-studio/comp-schoolai.png" alt="SchoolAI" onerror="this.parentElement.innerHTML='<p style=\'padding:0.5rem;font-size:10px;color:#999;text-align:center\'>📷</p>'" />
+          </div>
+          <div class="comp-small-body">
+            <div class="comp-small-name">SchoolAI</div>
+            <div class="comp-small-note">Complex setup. Teachers abandon it.</div>
+          </div>
+        </div>
+        <div class="comp-small-card lightbox-trigger">
+          <div class="comp-small-thumb">
+            <img src="images/ai-teacher-studio/comp-khanmigo.png" alt="Khanmigo" onerror="this.parentElement.innerHTML='<p style=\'padding:0.5rem;font-size:10px;color:#999;text-align:center\'>📷</p>'" />
+          </div>
+          <div class="comp-small-body">
+            <div class="comp-small-name">Khanmigo</div>
+            <div class="comp-small-note">Trust signals done well.</div>
+          </div>
+        </div>
+        <div class="comp-small-card lightbox-trigger">
+          <div class="comp-small-thumb">
+            <img src="images/ai-teacher-studio/comp-hmh.png" alt="HMH AI tools" onerror="this.parentElement.innerHTML='<p style=\'padding:0.5rem;font-size:10px;color:#999;text-align:center\'>📷</p>'" />
+          </div>
+          <div class="comp-small-body">
+            <div class="comp-small-name">HMH</div>
+            <div class="comp-small-note">Enterprise patterns.</div>
+          </div>
+        </div>
+      </div>
+      <p class="img-caption">Full flows, not just screenshots — I analyzed navigation, input patterns, output formatting, and error states across all five tools.</p>
+
+      <div class="cs-body" style="margin-top:1.5rem">
+        <p>I ran crazy 8 sketches on paper, moved to wireframes quickly, and pulled in feedback early — from the design team, PM, and engineers — before anything was final. I presented in design critiques regularly, because with this timeline I needed every round of feedback I could get.</p>
+        <p>One decision that saved significant time: I designed the Text Leveler first end-to-end, then used it as the reference for handoff while continuing to design the remaining tools in parallel. Engineers could start building foundations without waiting for all seven tools to be complete.</p>
+      </div>
+
+      <p class="img-label" style="margin-top:1.5rem">From sketch to final — the hub evolution</p>
+      <div class="img-grid">
+        <div class="img-grid-item lightbox-trigger">
+          <img src="images/ai-teacher-studio/wireframe-hub.png" alt="Hand-drawn sketches exploring hub layouts" onerror="this.parentElement.innerHTML='<p style=\'padding:1rem;font-size:11px;color:#999;text-align:center\'>📷 Sketches</p>'" />
+        </div>
+        <div class="img-grid-item lightbox-trigger">
+          <img src="images/ai-teacher-studio/wireframe-digital-hub.png" alt="Digital wireframe of the hub in Figma" onerror="this.parentElement.innerHTML='<p style=\'padding:1rem;font-size:11px;color:#999;text-align:center\'>📷 Wireframe digital</p>'" />
+        </div>
+      </div>
+      <p class="img-caption">Paper sketches exploring different hub layouts → digital wireframe in Figma → shipped product.</p>
+
+      <p class="img-label" style="margin-top:1.5rem">From form to output — the reusable tool template</p>
+      <div class="img-side">
+        <div class="img-side-item lightbox-trigger">
+          <img src="images/ai-teacher-studio/tool-form.png" alt="Text Leveler — form state" onerror="this.parentElement.innerHTML='<p style=\'padding:1rem;font-size:11px;color:#999;text-align:center\'>📷 Tool form</p>'" />
+        </div>
+        <div class="img-side-item lightbox-trigger">
+          <img src="images/ai-teacher-studio/tool-output.png" alt="Text Leveler — output state" onerror="this.parentElement.innerHTML='<p style=\'padding:1rem;font-size:11px;color:#999;text-align:center\'>📷 Tool output</p>'" />
+        </div>
+      </div>
+      <p class="img-caption">Text Leveler — form and output. The same layout structure works across all seven tools.</p>
+
+      <div class="img-full lightbox-trigger" style="margin-top:1.5rem">
+        <img src="images/ai-teacher-studio/flow-figma.png" alt="Complete flow in Figma — all states and edge cases" onerror="this.parentElement.innerHTML='<p style=\'padding:2rem;font-size:13px;color:#999;text-align:center\'>📷 Flujo completo en Figma</p>'" />
+      </div>
+      <p class="img-caption">The full flow in Figma — all states, edge cases, error messages, and decision points mapped out before handoff.</p>
+    </div>
+
+    <!-- KEY DECISIONS -->
+    <div class="cs-section">
+      <p class="section-label">Key decisions</p>
+
+      <div class="decision">
+        <p class="decision-title">One template, seven tools</p>
+        <p class="decision-body">Rather than designing each tool independently, I identified the shared anatomy — header, inputs, generation state, output, error states — and built a reusable system. This made the product feel consistent to teachers and made it scalable for the team. When new tools were added later, the pattern was already there.</p>
+      </div>
+
+      <div class="decision">
+        <p class="decision-title">Output format matters as much as output quality</p>
+        <p class="decision-body">Early testing showed teachers would abandon a tool if they had to reformat the output before using it. The worksheet creator separates answer keys from student-facing content — something teachers immediately called out as the right call. We made similar formatting decisions across all tools, including output title generation rules to keep things scannable and consistent.</p>
+      </div>
+
+      <div class="decision">
+        <p class="decision-title">Progressive disclosure over feature density</p>
+        <p class="decision-body">Research showed that MagicSchool's biggest weakness was overwhelming teachers with too many options at once. We organized tools by workflow category — Plan, Create, Differentiate, Assess — and kept each tool's form focused. Help text moved into tooltips to reduce visual noise.</p>
+      </div>
+
+      <div class="decision">
+        <p class="decision-title">Shipping inside an iframe has real constraints</p>
+        <p class="decision-body">The product lives inside an iframe embedded in Renaissance Intelligence, which meant no standard modals, specific sizing constraints, and extra attention during QA to catch discrepancies between design and code. I flagged these early and stayed close to engineering during implementation.</p>
+      </div>
+
+      <div class="decision">
+        <p class="decision-title">Be honest about what's beta</p>
+        <p class="decision-body">We launched with a clear BETA label and a banner explaining that tools work standalone for now, with Renaissance data integration coming in future updates. Setting the right expectations without underselling the value.</p>
+      </div>
+
+      <div class="decision">
+        <p class="decision-title">Design system contributions</p>
+        <p class="decision-body">This was a new product with limited existing patterns. I identified gaps and requested new components — including a textarea that supported file uploads, which I designed multiple proposals for based on competitive research before bringing to the DS team.</p>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="cs-section">
+      <p class="section-label">Results</p>
+      <div class="cs-body">
+        <p>An unmoderated usability study with 15 K-12 teachers across three tool variants — worksheet creator, quiz creator, and lesson plan creator — validated the core experience ahead of BTS launch.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-number">5/5</p>
+          <p class="stat-label">ease of use rating across all three top tools</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">13/15</p>
+          <p class="stat-label">teachers found AI Teacher Studio easily in the nav</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">3,438</p>
+          <p class="stat-label">unique visitors to the hub (Pendo, beta period)</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">1,493</p>
+          <p class="stat-label">unique accounts reached</p>
+        </div>
+      </div>
+
+      <div class="img-grid" style="margin-top:1.5rem">
+        <div class="img-grid-item lightbox-trigger">
+          <img src="images/ai-teacher-studio/research-findings.png" alt="User testing results — quality and formatting burden scores" onerror="this.parentElement.innerHTML='<p style=\'padding:1rem;font-size:11px;color:#999;text-align:center\'>📷 Research findings</p>'" />
+        </div>
+        <div class="img-grid-item lightbox-trigger">
+          <img src="images/ai-teacher-studio/pendo-usage.png" alt="Pendo usage data — page views and unique accounts" onerror="this.parentElement.innerHTML='<p style=\'padding:1rem;font-size:11px;color:#999;text-align:center\'>📷 Pendo usage data</p>'" />
+        </div>
+      </div>
+      <p class="img-caption">Left: usability study results — worksheet creator scored highest with median quality 5/5 and formatting burden 2/5. Right: Pendo usage data from the beta period.</p>
+
+      <div class="cs-body" style="margin-top:1.5rem">
+        <p>Worksheet creator was the strongest performer — median output quality 5/5, median formatting burden 2/5, meaning teachers could use it with minimal rework. Quiz creator received strong quality ratings but had a critical issue: answers appeared inline with questions, making outputs unusable as student-facing assessments without manual editing. That fix was already underway before BTS.</p>
+        <p>The study also surfaced what teachers wanted next: iterative refinement. The ability to edit, remix, or continue a conversation rather than regenerating from scratch. That finding became the next project.</p>
+      </div>
+
+      <div class="quote-highlight">
+        <p>"Compared to ChatGPT... I like this one. The output is quick, nice and high quality."</p>
+      </div>
+    </div>
+
+    <!-- WHAT I LEARNED -->
+    <div class="cs-section">
+      <p class="section-label">What I learned</p>
+
+      <div class="learned-item">
+        <span class="learned-num">01</span>
+        <div>
+          <p class="learned-title">Systems thinking is the only way to scale fast</p>
+          <p class="learned-body">Designing one reusable template instead of seven individual tools was the decision that made the timeline possible. Every hour I didn't spend reinventing the form layout was an hour I could spend on output formatting, edge cases, or feedback rounds.</p>
+        </div>
+      </div>
+
+      <div class="learned-item">
+        <span class="learned-num">02</span>
+        <div>
+          <p class="learned-title">Output quality is a design problem, not just an AI problem</p>
+          <p class="learned-body">How content is structured, labeled, and formatted directly affects whether teachers trust and use it. The answer key placement in the worksheet creator wasn't a small detail — it was the difference between a tool teachers would reach for and one they'd abandon.</p>
+        </div>
+      </div>
+
+      <div class="learned-item">
+        <span class="learned-num">03</span>
+        <div>
+          <p class="learned-title">Constraints create clarity</p>
+          <p class="learned-body">The iframe, the five-week timeline, the limited component library — all of these could have been blockers. Instead they forced better prioritization. I knew exactly what had to be perfect for launch and what could iterate later.</p>
+        </div>
+      </div>
+
+      <div class="learned-item">
+        <span class="learned-num">04</span>
+        <div>
+          <p class="learned-title">Staying close to engineering during QA is non-negotiable</p>
+          <p class="learned-body">With iframe constraints and a fast-moving build, design intent doesn't always survive translation to code. I caught issues during QA that would have shipped as bugs. That closeness mattered.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div class="cs-section">
+      <p class="section-label">What's next</p>
+      <div class="cs-body">
+        <p>The most consistent feedback from teachers — across the usability study and in-product surveys — was that they wanted to keep the conversation going after generation. Edit a question. Make it harder. Add an open-ended prompt. Get a suggestion for what to create next.</p>
+        <p>I'm currently designing a conversational AI refinement layer that lets teachers iterate on outputs through chat. It's the most interaction-design-intensive work I've done on this project, and the first time I'm using Claude Code as an active tool in my design process — building interactive prototypes to test ideas faster than Figma alone allows.</p>
+      </div>
+    </div>
+
+    <a href="case-study-ai-activity-suggestions.html" class="next-case">
+      <div>
+        <p class="next-label">Next case study</p>
+        <p class="next-title">AI Activity Suggestions →</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-label="Image preview">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+    <img src="" alt="" id="lightboxImg" />
+  </div>
+
+  <script>
+    const PORTFOLIO_PASSWORD = 'helena2025';
+
+    function checkPassword() {
+      const input = document.getElementById('pwInput').value;
+      const error = document.getElementById('pwError');
+      if (input === PORTFOLIO_PASSWORD) {
+        document.getElementById('pwOverlay').style.display = 'none';
+        sessionStorage.setItem('portfolio_auth', 'true');
+      } else {
+        error.classList.add('visible');
+        document.getElementById('pwInput').value = '';
+        document.getElementById('pwInput').focus();
+      }
+    }
+    document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
+    if (sessionStorage.getItem('portfolio_auth') === 'true') document.getElementById('pwOverlay').style.display = 'none';
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+
+    document.querySelectorAll('.lightbox-trigger img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
