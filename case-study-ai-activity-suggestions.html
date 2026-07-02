@@ -6,7 +6,7 @@
   <title>AI Activity Suggestions — Carla Ottaviano</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -21,7 +21,7 @@
       --accent-light: #F0EFE8;
       --blue-light: #EFF6FF;
       --blue: #1A56DB;
-      --font-display: 'Lora', Georgia, serif;
+      
       --font-body: 'Inter', system-ui, sans-serif;
     }
 
@@ -36,7 +36,7 @@
       height: 56px; display: flex; align-items: center; justify-content: space-between;
     }
 
-    .nav-name { font-family: var(--font-display); font-size: 1rem; color: var(--ink); text-decoration: none; }
+    .nav-name { font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
     .nav-back { font-size: 0.8125rem; color: var(--ink-3); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.15s; }
     .nav-back:hover { color: var(--ink); }
 
@@ -55,9 +55,8 @@
     }
 
     .cs-title {
-      font-family: var(--font-display);
       font-size: clamp(1.875rem, 4vw, 2.75rem);
-      font-weight: 400; line-height: 1.2; letter-spacing: -0.02em;
+      font-weight: 600; line-height: 1.1; letter-spacing: -0.03em;
       color: var(--ink); margin-bottom: 1.25rem;
     }
 
@@ -160,7 +159,7 @@
     }
 
     .stat-number {
-      font-family: var(--font-display); font-size: 1.75rem;
+      font-size: 1.75rem;
       font-weight: 400; color: var(--ink); margin-bottom: 4px; line-height: 1;
     }
 
@@ -201,7 +200,7 @@
     }
 
     .quote-highlight p {
-      font-family: var(--font-display); font-size: 1.0625rem; font-style: italic;
+      font-size: 1.0625rem; font-style: italic;
       color: var(--white); line-height: 1.5; text-align: center;
     }
 
@@ -227,7 +226,7 @@
     }
     .next-case:hover { opacity: 0.6; }
     .next-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 4px; }
-    .next-title { font-family: var(--font-display); font-size: 1.125rem; font-weight: 400; color: var(--ink); }
+    .next-title { font-size: 1.125rem; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
 
     /* PASSWORD */
     .pw-overlay {
@@ -235,7 +234,7 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 1.5rem; padding: 2rem;
     }
-    .pw-overlay h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--ink); }
+    .pw-overlay h2 { font-size: 1.125rem; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); }
     .pw-overlay p { font-size: 0.875rem; color: var(--ink-3); text-align: center; max-width: 320px; }
     .pw-form { display: flex; gap: 8px; }
     .pw-input { font-family: var(--font-body); font-size: 0.875rem; padding: 0.625rem 1rem; border: 1px solid var(--rule); border-radius: 4px; outline: none; width: 200px; transition: border-color 0.15s; }
